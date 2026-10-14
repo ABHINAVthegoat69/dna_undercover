@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>DNA UNLOCKED — The Science of DNA Fingerprinting</title>
+<style>
+:root{--bg:#07111F;--card:rgba(20,34,58,.66);--tx:#F3F7FF;--mut:#a3b3cf;--cy:#38E8FF;--vi:#9B7BFF;--mi:#63FFC6;--bd:rgba(56,232,255,.28);--bad:#ff7b8a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="light"]):not([data-theme="dark"]){--bg:#eef3fb;--card:rgba(255,255,255,.78);--tx:#0B1424;--mut:#44566f;--cy:#006f94;--vi:#5b3fd6;--mi:#00805a;--bd:rgba(0,111,148,.35);--bad:#c62840}}
+:root[data-theme="dark"]{--bg:#07111F;--card:rgba(20,34,58,.66);--tx:#F3F7FF;--mut:#a3b3cf;--cy:#38E8FF;--vi:#9B7BFF;--mi:#63FFC6;--bd:rgba(56,232,255,.28);--bad:#ff7b8a}
+*{box-sizing:inherit}html{scroll-behavior:smooth;scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.65 "Space Grotesk",Inter,system-ui,sans-serif;overflow-x:hidden}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,nav,footer{position:relative;z-index:1}
+nav{position:sticky;top:env(safe-area-inset-top,0px);display:flex;gap:6px;align-items:center;padding:10px 16px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd);overflow-x:auto;z-index:5}
+nav b{margin-right:auto;white-space:nowrap;letter-spacing:.08em;color:var(--cy)}
+nav a{color:var(--mut);text-decoration:none;padding:6px 12px;border-radius:99px;white-space:nowrap;border:1px solid transparent;transition:.25s}
+nav a:hover{color:var(--tx)}nav a.act{color:var(--tx);border-color:var(--cy);box-shadow:0 0 14px -2px var(--cy)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--cy);outline-offset:2px}
+.sec{max-width:1080px;margin:auto;padding:84px 20px 20px}
+h1{font-size:clamp(2.6rem,8vw,5.6rem);line-height:1;margin:.3em 0;letter-spacing:-.02em;font-weight:700}
+h2{font-size:clamp(1.8rem,4.5vw,2.8rem);line-height:1.1;margin:0 0 .4em}
+h3{margin:.2em 0}p{max-width:68ch}.mut{color:var(--mut)}
+.hero{min-height:92vh;display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:center;padding-top:50px}
+.badge{display:inline-block;border:1px solid var(--bd);border-radius:99px;padding:4px 14px;font-size:.8rem;color:var(--mi);letter-spacing:.06em}
+.grad{background:linear-gradient(90deg,var(--cy),var(--vi));-webkit-background-clip:text;background-clip:text;color:transparent}
+.orb{position:relative;width:min(300px,70vw);aspect-ratio:1;border-radius:50%;border:1px dashed var(--cy);margin:auto;animation:spin 40s linear infinite}
+.orb:before{content:"";position:absolute;inset:14%;border-radius:50%;border:1px solid var(--vi);background:conic-gradient(from 0deg,transparent 70%,rgba(56,232,255,.35))}
+.orb span{position:absolute;font-size:2rem;font-weight:700;animation:fl 4s ease-in-out infinite}
+.fact{margin-top:22px;padding:14px 18px;border-left:3px solid var(--mi);max-width:56ch;background:var(--card)}
+.btn{font:inherit;cursor:pointer;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 18px;text-decoration:none;display:inline-block;transition:.25s}
+.btn:hover:not(:disabled){transform:translateY(-2px);border-color:var(--cy);box-shadow:0 6px 18px -8px var(--cy)}
+.btn:disabled{opacity:.4;cursor:not-allowed}.btn.on{border-color:var(--mi);box-shadow:0 0 14px -4px var(--mi)}
+.btn.p{background:linear-gradient(90deg,var(--cy),var(--vi));color:#07111F;font-weight:700;border:0}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;align-items:center}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:20px;backdrop-filter:blur(8px)}
+.grid{display:grid;grid-template-columns:1.25fr 1fr;gap:18px}
+svg{width:100%;height:auto;display:block}
+.zoomviz{min-height:220px;display:grid;place-items:center;overflow:hidden;border:1px solid var(--bd);border-radius:14px;background:radial-gradient(circle at center,rgba(56,232,255,.08),transparent 68%);margin-top:8px}
+.zoomviz svg{width:100%;max-width:460px;max-height:290px}
+.zoom-scene{transform-origin:230px 145px;animation:cameraZoom 1.25s cubic-bezier(.18,.72,.2,1) both}
+.zoom-scene .focus{animation:focusReveal 1.25s ease-out both}
+.zoom-ring{transform-box:fill-box;transform-origin:center;animation:ringPulse 1.8s ease-out infinite}
+.zoom-dash{stroke-dasharray:5 7;animation:dnaDash 3s linear infinite}
+@keyframes cameraZoom{0%{transform:scale(1);opacity:.65}55%{transform:scale(2.15);opacity:1}100%{transform:scale(1.28);opacity:1}}
+@keyframes focusReveal{0%{opacity:.25}45%{opacity:.55}100%{opacity:1}}
+@keyframes ringPulse{0%{transform:scale(.82);opacity:.8}100%{transform:scale(1.22);opacity:0}}
+@keyframes dnaDash{to{stroke-dashoffset:-48}}
+.dn{fill:none;stroke:var(--cy);stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 4px var(--cy))}
+.pill{display:inline-block;margin-top:8px;padding:4px 14px;border-radius:99px;background:rgba(99,255,198,.14);border:1px solid var(--mi);color:var(--mi);font-weight:700;font-size:.85rem;letter-spacing:.05em}
+.bar{height:6px;border-radius:9px;background:rgba(127,150,190,.25);overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cy),var(--mi));transition:width .5s}
+.done{border:1px solid var(--mi);border-radius:12px;padding:12px;margin-top:10px;color:var(--mi);font-weight:700;text-align:center}
+.note{font-size:.88rem;color:var(--mut);border-top:1px dashed var(--bd);margin-top:12px;padding-top:10px}
+.bases button{width:46px;height:46px;font-size:1.2rem;font-weight:700;border-radius:50%}
+.A{color:var(--cy)}.T{color:var(--vi)}.G{color:var(--mi)}.C{color:#ffb86b}
+.chip{display:inline-block;padding:2px 9px;margin:2px;border-radius:7px;background:rgba(127,150,190,.2);font-weight:700}
+.chip.g{background:rgba(99,255,198,.22);color:var(--mi)}.chip.r{background:rgba(255,123,138,.22);color:var(--bad)}
+table{width:100%;border-collapse:collapse}td,th{padding:6px 8px;text-align:left;border-bottom:1px solid var(--bd)}
+.fb{padding:12px 14px;border-radius:12px;border:1px solid;margin:10px 0}.fb.g{color:var(--mi)}.fb.r{color:var(--bad)}
+.opts{display:grid;gap:8px}.opts .btn{text-align:left}.opts .btn.ok{border-color:var(--mi);color:var(--mi)}.opts .btn.no{border-color:var(--bad);color:var(--bad)}
+.take{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:20px 0}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+footer{max-width:1080px;margin:auto;padding:50px 20px 60px;color:var(--mut);font-size:.85rem}footer a{color:var(--cy)}
+@keyframes fall{from{transform:translateY(-10px);opacity:0}to{transform:translateY(150px);opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes sw{to{transform:translate(55px,22px)}}
+@keyframes pop{to{opacity:0;transform:scale(1.8)}}
+@keyframes fl{50%{transform:translateY(-8px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fall{animation:fall 1.4s ease-in both}.sd,.lab{animation:fade 1s both}.lay{animation:rise .8s both}.sw{animation:sw 1.6s ease-in-out both}
+.cl{transform-box:fill-box;transform-origin:center;animation:pop 1s 1s both}
+@media(max-width:760px){.hero,.grid{grid-template-columns:1fr}.sec{padding-top:64px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+</style></head><body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<nav aria-label="Sections"><b>DNA UNLOCKED</b><a href="#top">Home</a><a href="#basics">Basics</a><a href="#lab">Lab</a><a href="#profile">DNA Builder</a><a href="#mystery">Lab Challenge</a><a href="#quiz">Quiz</a></nav>
+<main>
+<section id="top" class="sec hero"><div>
+<span class="badge">FORENSIC LAB • INTERACTIVE EXPERIENCE</span>
+<h1>YOUR DNA.<br><span class="grad">YOUR STORY.</span></h1>
+<p>Hidden inside almost every cell is a microscopic instruction manual that helps make you uniquely you. Discover how scientists read tiny traces of DNA to connect evidence with people and solve mysteries.</p>
+<div class="row"><a class="btn p" href="#lab">ENTER THE LAB</a><a class="btn" href="#mystery">TRY THE LAB CHALLENGE</a></div>
+<div class="fact">Any two unrelated people share about 99.9% of their DNA sequence. Forensic profiling focuses on selected regions that vary. <span class="mut">(Source: NHGRI)</span></div>
+<p class="mut"><em>Every Life Has a Code. Every Code Tells a Story.</em></p></div>
+<div class="orb" aria-hidden="true"><span class="A" style="top:2%;left:46%">A</span><span class="T" style="top:46%;right:0;animation-delay:-1s">T</span><span class="G" style="bottom:2%;left:46%;animation-delay:-2s">G</span><span class="C" style="top:46%;left:0;animation-delay:-3s">C</span></div></section>
+
+<section id="basics" class="sec rv"><h2>What is DNA fingerprinting?</h2>
+<p>Imagine your DNA is an enormous instruction book. Certain sections contain patterns that vary between people. Scientists examine selected variable regions and build a DNA profile, which can be compared with another profile.</p>
+<div class="grid"><div class="card"><h3>Zoom in</h3><div class="row" id="hier"></div><div id="zoomviz" class="zoomviz" aria-label="Animated visual zoom"></div></div>
+<div class="card"><h3>Click a base</h3><div class="row bases" id="bases"></div><p id="binfo" class="mut">A pairs with T. G pairs with C.</p></div></div>
+<div class="card" style="margin-top:18px"><p style="margin:0"><b>DNA</b> is the biological material (short for Deoxyribonucleic Acid). A <b>DNA profile</b> is a set of measurements from selected genetic markers, not a person's whole genetic code. Identical twins generally share the same inherited profile at the standard forensic markers.</p></div></section>
+
+<section id="lab" class="sec rv"><h2>Interactive DNA extraction lab</h2>
+<div class="grid"><div class="card"><div id="stage" aria-live="polite"></div></div>
+<div class="card"><h3 id="lt"></h3><p id="ltx"></p><p id="lsc" class="note" hidden></p><div id="done" class="done" hidden>EXTRACTION COMPLETE — READY FOR ANALYSIS</div>
+<div class="row"><label><input type="checkbox" id="kid"> Explain like I'm 10</label><label><input type="checkbox" id="sci"> Science behind it</label></div>
+<div class="bar" role="progressbar" aria-label="Lab progress"><i id="bar"></i></div></div></div>
+<div class="row"><button class="btn" id="back">Back</button><button class="btn p" id="next">Next step</button><button class="btn" id="replay">Replay</button><button class="btn" id="reset">Reset</button><button class="btn" id="auto">Auto-play</button></div>
+<p class="note">This is a conceptual simulation. Real forensic DNA extraction uses controlled laboratory procedures, specialised equipment, and contamination-prevention measures.</p></section>
+
+<section id="profile" class="sec rv"><h2>Build a DNA ladder</h2>
+<p>You're the molecule designer. Pick bases and watch the matching strand build itself. Remember the pairing rule: <b>A ↔ T</b> and <b>G ↔ C</b>.</p>
+<div class="grid"><div class="card"><span class="badge">INTERACTIVE 01</span><h3>Choose a base</h3><p class="mut">Tap a letter to add it to your DNA strand.</p><div class="row" id="basepick"><button class="btn A" data-base="A">A</button><button class="btn T" data-base="T">T</button><button class="btn G" data-base="G">G</button><button class="btn C" data-base="C">C</button></div><p><b>Your strand</b></p><div id="strand" class="row" aria-live="polite"><span class="mut">Tap a base to begin…</span></div><p><b>Complementary strand</b></p><div id="complement" class="row" aria-live="polite"><span class="mut">Matching bases appear here.</span></div><div class="row"><button class="btn p" id="basecheck">Check my strand</button><button class="btn" id="basereset">Clear and rebuild</button><button class="btn" id="baserandom">Surprise me</button></div><p id="basefeedback" class="note" aria-live="polite">Build at least 4 bases, then check your DNA ladder.</p></div>
+<div class="card"><span class="badge">LIVE VISUAL</span><h3>Your double helix</h3><div id="helixbuilder" class="zoomviz" aria-live="polite"></div><p class="mut">This is a simplified visual model. Real DNA twists into a double helix, with complementary bases pairing across the two strands.</p></div></div></section>
+
+<section id="mystery" class="sec rv"><h2>DNA Lab Challenge</h2><p>Three quick missions. Choose the strongest scientific answer — not just the most dramatic one.</p><div class="card"><div class="row" style="justify-content:space-between;align-items:center"><span class="badge" id="missionbadge">MISSION 1 OF 3</span><span class="mut" id="missionscore">Score: 0 / 3</span></div><h3 id="missiontitle">A sample is found</h3><p id="missiontext"></p><div class="opts" id="missionopts"></div><div id="missionfeedback" aria-live="polite"></div><div class="row" style="margin-top:14px"><button class="btn p" id="missionnext" disabled>Next mission</button><button class="btn" id="missionreset">Restart challenge</button></div></div><p class="note">Forensic science is about evaluating evidence carefully. A DNA result is one piece of information; it does not automatically prove when or how DNA arrived, or that someone is guilty.</p></section>
+
+<section id="quiz" class="sec rv"><h2>Test your forensic IQ</h2><div class="card" id="qbox"></div></section>
+
+<section id="end" class="sec rv" style="text-align:center"><h2 class="grad">TINY MOLECULES. BIG DISCOVERIES.</h2>
+<p style="margin:auto">DNA fingerprinting has transformed forensic science by helping investigators compare biological evidence, identify people, and sometimes clear the innocent. Its real power lies not only in the match, but in the careful science used to interpret it.</p>
+<div class="take"><div class="card">Every sample tells a scientific story.</div><div class="card">Evidence must be tested and interpreted carefully.</div><div class="card">Science is strongest when accuracy, fairness, and ethics work together.</div></div>
+<div class="row" style="justify-content:center"><a class="btn" href="#lab" id="e1">Explore the Lab Again</a><a class="btn" href="#mystery" id="e2">Solve the Mystery</a><a class="btn" href="#quiz" id="e3">Take the Quiz Again</a></div></section>
+</main>
+<footer>Educational project. Simulations are simplified teaching analogies, not real laboratory procedure. A compatible DNA profile does not by itself prove guilt. Statistic: National Human Genome Research Institute, <a href="https://www.genome.gov/" target="_blank" rel="noopener">genome.gov</a>. Quiz facts are simplified educational summaries; check primary sources before citing.</footer>
+
+<script>
+const $=s=>document.querySelector(s),rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* background helix + particles */
+const cv=$('#bg'),cx=cv.getContext('2d');let W,H,P=[];
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;P=Array.from({length:Math.min(60,W/16|0)},()=>({x:Math.random()*W,y:Math.random()*H,v:Math.random()*.3+.1,r:Math.random()*1.8+.4}))}
+function draw(t){cx.clearRect(0,0,W,H);const x0=W>760?W*.8:W*.5,a=Math.min(70,W*.12);cx.globalAlpha=.3;
+for(let y=-10;y<H+10;y+=16){const s=Math.sin(y/70+t/1400),x1=x0+s*a,x2=x0-s*a,z=Math.cos(y/70+t/1400);
+cx.strokeStyle='#9B7BFF';cx.beginPath();cx.moveTo(x1,y);cx.lineTo(x2,y);cx.stroke();
+cx.fillStyle='#38E8FF';cx.beginPath();cx.arc(x1,y,3+z*1.6,0,7);cx.fill();cx.fillStyle='#63FFC6';cx.beginPath();cx.arc(x2,y,3-z*1.6,0,7);cx.fill()}
+cx.globalAlpha=.4;cx.fillStyle='#38E8FF';P.forEach(p=>{p.y-=rm?0:p.v;if(p.y<0)p.y=H;cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fill()});
+if(!rm)requestAnimationFrame(draw)}
+addEventListener('resize',()=>{rs();if(rm)draw(0)});rs();draw(0);
+/* reveal + active nav */
+const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('in')),{threshold:.08});document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+const links=[...document.querySelectorAll('nav a')],io2=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)links.forEach(l=>l.classList.toggle('act',l.getAttribute('href')==='#'+x.target.id))}),{threshold:.4});
+['top','basics','lab','profile','mystery','quiz'].forEach(i=>io2.observe($('#'+i)));
+/* DNA explorer */
+const HI=[['Cell','The basic unit of life. Most human cells contain DNA.'],['Nucleus','A compartment inside the cell that holds most of the DNA.'],['Chromosomes','DNA is packaged into chromosomes. Humans normally have 46 in most cells.'],['DNA','A double helix. Its rungs are pairs of bases: A with T, G with C.'],['Genetic markers','Specific places where DNA varies between people. Forensic profiling measures selected ones.']];
+$('#hier').innerHTML=HI.map((h,i)=>`<button class="btn" data-h="${i}">${h[0]}</button>`).join('<span class="mut" aria-hidden="true">›</span>');
+function zoomArt(i){
+/* Each click moves the camera inward to the next nested biological level. */
+const outerCell=`<circle cx="230" cy="145" r="104" fill="rgba(56,232,255,.09)" stroke="var(--cy)" stroke-width="3"/><circle cx="230" cy="145" r="91" fill="rgba(56,232,255,.035)" stroke="var(--cy)" stroke-width="1.5"/>`;
+const nucleus=`<circle cx="230" cy="145" r="53" fill="rgba(155,123,255,.22)" stroke="var(--vi)" stroke-width="3"/><circle cx="217" cy="131" r="12" fill="rgba(99,255,198,.22)" stroke="var(--mi)" stroke-width="1.5"/><circle cx="244" cy="158" r="5" fill="var(--mi)"/>`;
+const chromosomes=`<g fill="none" stroke-linecap="round" stroke-width="9"><path d="M204 116l43 60m0-60l-43 60" stroke="var(--mi)"/><path d="M253 122l-29 48m0-48l29 48" stroke="var(--vi)"/></g>`;
+const dna=`<g fill="none" stroke-linecap="round" stroke-width="4"><path d="M196 66 C270 86 190 112 264 136 S190 184 264 222" stroke="var(--cy)"/><path d="M264 66 C190 86 270 112 196 136 S270 184 196 222" stroke="var(--vi)"/>${Array.from({length:10},(_,k)=>`<path d="M${196+(k%2)*5} ${72+k*15} L${264-(k%2)*5} ${72+k*15}" stroke="var(--mi)" stroke-width="2.4" opacity=".9"/>`).join('')}</g>`;
+let art='';
+if(i===0){
+/* Start wide: one cell with its nucleus visible inside. */
+art=`<g class="zoom-scene">${outerCell}<g fill="var(--mi)">${[[168,112],[271,104],[189,181],[278,164],[231,198],[150,145],[294,137],[203,92]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="5"/>`).join('')}</g>${nucleus}<circle class="zoom-ring" cx="230" cy="145" r="53" fill="none" stroke="var(--vi)" stroke-width="2.5"/><path d="M230 92V58M230 58l-8 10m8-10l8 10" stroke="var(--mi)" stroke-width="2" fill="none"/></g>`;
+}
+if(i===1){
+/* Camera moves through the cell boundary and into its nucleus. */
+art=`<g class="zoom-scene">${outerCell}<g opacity=".25">${nucleus}</g><circle cx="230" cy="145" r="58" fill="rgba(155,123,255,.08)" stroke="var(--vi)" stroke-width="2" stroke-dasharray="5 6"/><g class="focus">${nucleus}<g fill="var(--mi)"><circle cx="205" cy="132" r="4"/><circle cx="245" cy="156" r="4"/><circle cx="238" cy="124" r="3"/></g></g><circle class="zoom-ring" cx="230" cy="145" r="48" fill="none" stroke="var(--cy)" stroke-width="2.5"/></g>`;
+}
+if(i===2){
+/* Inside the nucleus, a chromosome becomes the focus. */
+art=`<g class="zoom-scene"><circle cx="230" cy="145" r="112" fill="rgba(155,123,255,.12)" stroke="var(--vi)" stroke-width="2"/><circle cx="230" cy="145" r="94" fill="rgba(155,123,255,.06)" stroke="var(--vi)" stroke-width="1.5"/><g opacity=".25">${chromosomes}</g><g class="focus">${chromosomes}<circle cx="230" cy="145" r="36" fill="none" stroke="var(--mi)" stroke-width="2" stroke-dasharray="4 5"/></g><circle class="zoom-ring" cx="230" cy="145" r="45" fill="none" stroke="var(--mi)" stroke-width="2.5"/></g>`;
+}
+if(i===3){
+/* Zoom from the chromosome into its DNA double helix. */
+art=`<g class="zoom-scene"><g opacity=".2">${chromosomes}</g><path d="M230 35V255" stroke="var(--vi)" stroke-width="1" stroke-dasharray="3 7" opacity=".5"/><g class="focus">${dna}</g><circle class="zoom-ring" cx="230" cy="145" r="86" fill="none" stroke="var(--cy)" stroke-width="2.5"/></g>`;
+}
+if(i===4){
+/* Push closer to one highlighted variable region of the DNA. */
+art=`<g class="zoom-scene"><g opacity=".18">${dna}</g><g class="focus">${dna}<rect x="208" y="121" width="44" height="46" rx="9" fill="rgba(99,255,198,.18)" stroke="var(--mi)" stroke-width="2.5"/><path d="M208 144h-36m80 0h36" stroke="var(--mi)" stroke-width="2.5" stroke-dasharray="5 5"/><circle cx="230" cy="144" r="63" fill="none" stroke="var(--cy)" stroke-width="1.5" stroke-dasharray="3 6"/></g><circle class="zoom-ring" cx="230" cy="145" r="60" fill="none" stroke="var(--mi)" stroke-width="2.5"/></g>`;
+}
+return `<svg viewBox="0 0 460 290" role="img" aria-label="Camera zooms inward through nested DNA structures"><defs><radialGradient id="glow"><stop stop-color="#38E8FF" stop-opacity=".2"/><stop offset="1" stop-color="#38E8FF" stop-opacity="0"/></radialGradient><clipPath id="zoomClip"><rect x="0" y="0" width="460" height="290" rx="12"/></clipPath></defs><g clip-path="url(#zoomClip)"><circle cx="230" cy="145" r="136" fill="url(#glow)"/>${art}<g fill="var(--cy)" opacity=".8"><circle cx="75" cy="55" r="2"/><circle cx="375" cy="76" r="2"/><circle cx="88" cy="230" r="2"/><circle cx="365" cy="224" r="2"/></g></g></svg>`;
+}
+let zoomIndex=0,zoomTimer=null;function hs(i){zoomIndex=i;document.querySelectorAll('[data-h]').forEach((b,k)=>{b.classList.toggle('on',k===i);b.setAttribute('aria-pressed',k===i)});$('#zoomviz').innerHTML='';requestAnimationFrame(()=>{$('#zoomviz').innerHTML=zoomArt(i)});clearTimeout(zoomTimer);zoomTimer=setTimeout(()=>hs((zoomIndex+1)%HI.length),2000)}hs(0);
+$('#hier').onclick=e=>{const b=e.target.closest('[data-h]');if(b)hs(+b.dataset.h)};
+const CP={A:'T',T:'A',G:'C',C:'G'};
+$('#bases').innerHTML=[...'ATGCGTAC'].map(c=>`<button class="btn ${c}" data-b="${c}" aria-label="Base ${c}">${c}</button>`).join('');
+$('#bases').onclick=e=>{const b=e.target.closest('[data-b]');if(!b)return;const c=b.dataset.b,n={A:'Adenine',T:'Thymine',G:'Guanine',C:'Cytosine'};$('#binfo').innerHTML=`<b class="${c}">${c}</b> is ${n[c]}. It pairs with <b class="${CP[c]}">${CP[c]}</b> (${n[CP[c]]}).`};
+/* extraction lab */
+const S=[
+{t:'Collect a sample',l:'SAMPLE COLLECTED',s:'Cells from your cheek contain DNA. Scientists collect these cells with a sterile swab. In forensic work, samples may also be blood, saliva, or other biological material.',e:'Inside your cheek are tiny cells, and each one holds DNA. A clean cotton swab picks some up.',x:'Reference samples are often collected this way; evidence samples vary with the scene.'},
+{t:'Break open the cells',l:'MEMBRANES OPEN — DNA RELEASED',s:'Cells have protective membranes. A specially prepared solution breaks them open and releases their contents.',e:'Cells have soft skins. A special liquid pops them open like tiny bubbles.',x:'Methods differ by sample type and laboratory protocol. DNA is not normally visible as individual strands in an ordinary forensic sample, so the glow is artistic.'},
+{t:'Separate unwanted material',l:'SEPARATION (SIMPLIFIED)',s:'The mixture contains DNA and many other substances. Laboratory methods help separate DNA from proteins, cell debris, and other unwanted material.',e:'Like sorting a messy toy box: the DNA goes one way and the junk goes another.',x:'This layered picture is a simplified illustration. Not every extraction method produces layers.'},
+{t:'Purify the DNA',l:'PURIFICATION',s:'Scientists use validated laboratory techniques to separate and purify DNA so it can be examined.',e:'A super-fine strainer cleans the DNA so it is ready to study.',x:'Real laboratories may use columns, magnetic beads, or other validated techniques.'},
+{t:'DNA revealed',l:'DNA EXTRACTED',s:'The DNA has been extracted! In real forensic work it may be invisible to the naked eye. Scientists measure its quantity and quality before deciding whether it is suitable for profiling.',e:'We have our DNA! You could not see it for real, but special tools can measure it.',x:'Extraction alone identifies no one. Next come quantification, PCR and profiling.'}];
+const T='M250 100v140a50 50 0 0 0 100 0V100',tube=f=>`<clipPath id="c"><path d="${T}z"/></clipPath><g clip-path="url(#c)">${f}</g><path d="${T}" fill="none" stroke="var(--cy)" stroke-width="3"/>`,
+st=(x,y,d)=>`<path class="dn sd" style="animation-delay:${d}s" d="M${x} ${y}q8-9 16 0t16 0"/>`;
+function helix(x,a,b){let o='';for(let y=a;y<b;y+=9){const d=Math.sin(y/13)*24;o+=`<line x1="${x-d}" y1="${y}" x2="${x+d}" y2="${y}" stroke="var(--vi)" opacity=".6"/><circle cx="${x-d}" cy="${y}" r="3.5" fill="var(--cy)"/><circle cx="${x+d}" cy="${y}" r="3.5" fill="var(--mi)"/>`}return o}
+function svg(i){let g='';
+if(i==0)g=`<g class="sw"><line x1="110" y1="55" x2="225" y2="105" stroke="#cbd5e1" stroke-width="7" stroke-linecap="round"/><circle cx="231" cy="108" r="9" fill="#fff"/></g>`+tube([0,1,2,3,4].map(k=>`<circle class="fall" style="animation-delay:${1.4+k*.35}s" cx="${268+k*16}" cy="${112+k%2*12}" r="7" fill="var(--mi)"/>`).join(''));
+if(i==1)g=tube([[275,230],[322,228],[296,262],[330,256],[272,262]].map(([x,y])=>`<circle class="cl" cx="${x}" cy="${y}" r="17" fill="rgba(99,255,198,.2)" stroke="var(--mi)" stroke-width="2" stroke-dasharray="4 3"/>`+st(x-12,y,1.6)).join(''));
+if(i==2)g=tube(`<rect class="lay" style="animation-delay:.2s" x="250" y="110" width="100" height="48" fill="var(--vi)" fill-opacity=".45"/><rect class="lay" style="animation-delay:.7s" x="250" y="158" width="100" height="48" fill="#8a97ab" fill-opacity=".45"/><rect class="lay" style="animation-delay:1.2s" x="250" y="206" width="100" height="90" fill="var(--cy)" fill-opacity=".3"/>`+st(264,245,1.6)+st(280,268,1.9))+`<g fill="var(--tx)" font-size="14" class="lab" style="animation-delay:1.4s"><text x="372" y="138">Cell debris</text><text x="372" y="186">Proteins &amp; other material</text><text x="372" y="254">DNA-containing liquid</text></g>`;
+if(i==3)g=`<polygon points="215,25 385,25 315,88 285,88" fill="none" stroke="var(--cy)" stroke-width="3"/><rect x="293" y="88" width="14" height="14" fill="var(--cy)"/>`+[[250,40],[290,52],[340,38],[318,60],[275,34]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="5" fill="#8a97ab"/>`).join('')+tube(`<rect x="250" y="262" width="100" height="40" fill="var(--cy)" fill-opacity=".3"/>`+[0,1,2].map(k=>`<circle class="fall" style="animation-delay:${k*.6}s" cx="300" cy="108" r="4" fill="var(--cy)"/>`).join(''));
+if(i==4)g=tube(`<rect class="lab" x="250" y="140" width="100" height="160" fill="var(--cy)" fill-opacity=".3"/>`+[0,1,2,3,4,5].map(k=>st(262+k%2*18,170+k*18,k*.2)).join(''))+helix(470,50,280);
+return `<svg viewBox="0 0 600 310" role="img" aria-label="Illustration: ${S[i].t}">${g}</svg><span class="pill lab" style="animation-delay:${i?1.8:2.8}s">${S[i].l}</span>`}
+let li=0,tm=null;
+const stop=()=>{clearInterval(tm);tm=null;$('#auto').textContent='Auto-play'};
+function lab(){const s=S[li];$('#stage').innerHTML=svg(li);$('#lt').textContent=`Step ${li+1} of 5: ${s.t}`;$('#ltx').textContent=$('#kid').checked?s.e:s.s;
+$('#lsc').hidden=!$('#sci').checked;$('#lsc').textContent='Science: '+s.x;$('#bar').style.width=(li+1)*20+'%';$('#done').hidden=li<4;$('#back').disabled=!li;$('#next').disabled=li>3}
+function startAuto(){if(tm)return;if(li>3)li=0;lab();$('#auto').textContent='Pause';tm=setInterval(()=>{if(li<4){li++;lab()}else stop()},4200)}
+$('#next').onclick=()=>{if(li<4){li++;lab()}};$('#back').onclick=()=>{if(li){li--;lab()}};$('#replay').onclick=lab;
+$('#reset').onclick=()=>{stop();li=0;lab()};$('#kid').onchange=$('#sci').onchange=lab;
+$('#auto').onclick=()=>{if(tm)stop();else startAuto()};lab();const labObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting&&entry.intersectionRatio>=0.2)startAuto();else stop()})},{threshold:[0,0.2]});labObserver.observe($('#lab'));
+/* DNA ladder builder */
+const pairing={A:'T',T:'A',G:'C',C:'G'},baseNames={A:'Adenine',T:'Thymine',G:'Guanine',C:'Cytosine'};let dnaStrand=[];
+function renderLadder(){const strand=$('#strand'),comp=$('#complement');strand.innerHTML=dnaStrand.length?dnaStrand.map((b,i)=>`<span class="chip ${b}" title="${baseNames[b]}">${b}</span>`).join(''):'<span class="mut">Tap a base to begin…</span>';comp.innerHTML=dnaStrand.length?dnaStrand.map(b=>`<span class="chip ${pairing[b]}" title="${baseNames[pairing[b]]}">${pairing[b]}</span>`).join(''):'<span class="mut">Matching bases appear here.</span>';let svg='<svg viewBox="0 0 520 240" role="img" aria-label="Your DNA double helix, built from complementary base pairs" style="width:100%;height:auto">';svg+='<path d="M150 20 C340 55 150 85 340 115 S150 175 340 220" fill="none" stroke="var(--cy)" stroke-width="5"/><path d="M340 20 C150 55 340 85 150 115 S340 175 150 220" fill="none" stroke="var(--vi)" stroke-width="5"/>';if(dnaStrand.length){dnaStrand.forEach((b,i)=>{const y=30+i*(180/Math.max(1,dnaStrand.length-1)),x1=245+Math.sin(i*.85)*75,x2=275-Math.sin(i*.85)*75;svg+=`<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="var(--mi)" stroke-width="3"/><text x="${x1-18}" y="${y+5}" fill="var(--cy)" font-size="13" font-weight="700">${b}</text><text x="${x2+8}" y="${y+5}" fill="var(--vi)" font-size="13" font-weight="700">${pairing[b]}</text>`})}svg+='</svg>';$('#helixbuilder').innerHTML=svg}
+$('#basepick').onclick=e=>{const b=e.target.closest('[data-base]');if(!b)return;if(dnaStrand.length>=10){$('#basefeedback').textContent='Your strand is full! Check it or clear it to build another.';return}dnaStrand.push(b.dataset.base);$('#basefeedback').textContent=`Added ${b.dataset.base} (${baseNames[b.dataset.base]}). Its partner is ${pairing[b.dataset.base]}.`;renderLadder()};
+$('#basecheck').onclick=()=>{$('#basefeedback').textContent=dnaStrand.length<4?'Add at least 4 bases before checking your ladder.':`Nice! ${dnaStrand.length} bases paired correctly. Complementary DNA strands follow A–T and G–C pairing rules.`};
+$('#basereset').onclick=()=>{dnaStrand=[];$('#basefeedback').textContent='Fresh start! Pick a base to begin a new strand.';renderLadder()};
+$('#baserandom').onclick=()=>{dnaStrand=Array.from({length:6},()=>['A','T','G','C'][Math.floor(Math.random()*4)]);$('#basefeedback').textContent='Random strand generated. Can you identify the complementary sequence?';renderLadder()};renderLadder();
+/* Interactive reasoning missions */
+const missions=[
+{title:'A sample is found',text:'A DNA profile from an object is consistent with a person’s reference sample at the markers tested. What is the most careful conclusion?',opts:['The person definitely committed the crime.','The result may support a connection, but context and other evidence still matter.','The DNA tells us exactly when it was deposited.'],correct:1,why:'A compatible profile can be important evidence, but it does not by itself establish when or how DNA arrived or prove guilt.'},
+{title:'The tiny sample',text:'A sample contains only a small amount of DNA. What might scientists do before profiling it?',opts:['Estimate its quantity and assess whether it is suitable for analysis.','Assume it belongs to whoever was nearest.','Skip quality checks to save time.'],correct:0,why:'Quantification and quality checks help a lab decide how to proceed and interpret results responsibly.'},
+{title:'Two DNA strands',text:'You build the strand A–G–T–C. Which strand pairs with it?',opts:['T–C–A–G','A–G–T–C','T–G–A–C'],correct:0,why:'A pairs with T, G pairs with C, T pairs with A, and C pairs with G. So the complementary strand is T–C–A–G.'}
+];let missionIndex=0,missionScore=0,missionAnswered=false;
+function renderMission(){const m=missions[missionIndex];$('#missionbadge').textContent=`MISSION ${missionIndex+1} OF ${missions.length}`;$('#missionscore').textContent=`Score: ${missionScore} / ${missions.length}`;$('#missiontitle').textContent=m.title;$('#missiontext').textContent=m.text;$('#missionfeedback').innerHTML='';$('#missionnext').disabled=true;$('#missionnext').textContent=missionIndex===missions.length-1?'See results':'Next mission';missionAnswered=false;$('#missionopts').innerHTML=m.opts.map((o,i)=>`<button class="btn" data-answer="${i}">${o}</button>`).join('')}
+$('#missionopts').onclick=e=>{const b=e.target.closest('[data-answer]');if(!b||missionAnswered)return;missionAnswered=true;const m=missions[missionIndex],chosen=+b.dataset.answer,ok=chosen===m.correct;if(ok)missionScore++;document.querySelectorAll('[data-answer]').forEach((x,i)=>{x.disabled=true;if(i===m.correct)x.classList.add('ok');else if(i===chosen)x.classList.add('no')});$('#missionscore').textContent=`Score: ${missionScore} / ${missions.length}`;$('#missionfeedback').innerHTML=`<p class="fb ${ok?'g':'r'}"><b>${ok?'Correct!':'Not quite.'}</b> ${m.why}</p>`;$('#missionnext').disabled=false};
+$('#missionnext').onclick=()=>{if(!missionAnswered)return;if(missionIndex<missions.length-1){missionIndex++;renderMission()}else{$('#missiontitle').textContent=`Challenge complete: ${missionScore} / ${missions.length}`;$('#missiontext').textContent=missionScore===3?'Excellent reasoning! You considered both the science and its limits.':'Good attempt! Restart the challenge to try again and strengthen your forensic reasoning.';$('#missionopts').innerHTML='';$('#missionfeedback').innerHTML='';$('#missionnext').disabled=true;$('#missionnext').textContent='Completed';$('#missionbadge').textContent='FINISHED'}};
+$('#missionreset').onclick=()=>{missionIndex=0;missionScore=0;renderMission()};renderMission();
+/* quiz */
+const Q=[['What does DNA stand for?',['Deoxyribonucleic Acid','Dynamic Nuclear Array','Dual Nitrogen Acid','Dense Neutral Atom'],'DNA is short for deoxyribonucleic acid. It carries genetic information.'],
+['Who discovered DNA fingerprinting in 1984?',['Sir Alec Jeffreys','Gregor Mendel','Louis Pasteur','Marie Curie'],'British geneticist Alec Jeffreys found it while studying patterns of genetic variation.'],
+['Why must cells be opened during DNA extraction?',['To release the DNA inside them','To make them colder','To count them','To turn them into proteins'],'DNA is inside the cell, so its protective membranes must be broken to release it.'],
+['What is PCR used for?',['Making many copies of selected DNA regions','Cutting cells open','Photographing DNA','Deleting DNA'],'PCR amplifies chosen regions so there is enough material to analyse.'],
+['What are STRs?',['Short sequences repeated a variable number of times','Sterile testing rods','Stored tissue records','Sealed storage rooms'],'Short Tandem Repeats are short DNA "words" whose repeat count differs between people.'],
+['Why do labs examine many markers, not just one?',['It makes a chance coincidence between unrelated people far less likely','Each marker is a different person','One marker is too expensive','It looks more impressive'],'Combining many markers greatly strengthens how well a profile can distinguish people.'],
+['A DNA match between a sample and a person...',['Does not by itself prove when or how the DNA arrived, or guilt','Always proves guilt','Proves they were there at the time','Shows the sample was never contaminated'],'Context, sample quality, contamination risk and other evidence all matter.'],
+['How did DNA help in the Pitchfork investigation?',['It showed an earlier suspect was innocent and helped identify the real offender','It replaced all other evidence','It found the weapon','It was not used'],'In 1980s Leicestershire, DNA testing excluded an innocent suspect, and wider screening led to Colin Pitchfork, convicted in 1987.']];
+let qi=0,sc=0,ans=false,cur;
+function qz(){const b=$('#qbox');if(qi>=Q.length){b.innerHTML=`<h3>Your score: ${sc} / ${Q.length}</h3><p>${sc>=7?'Excellent! You think like a forensic scientist.':sc>=4?'Good work! Revisit the lab and try again.':'Keep exploring the lab, then try again.'}</p><button class="btn p" id="qre">Replay quiz</button>`;$('#qre').onclick=()=>{qi=sc=0;qz()};return}
+const q=Q[qi];cur=q[1].map((t,i)=>[t,!i]).sort(()=>Math.random()-.5);ans=false;
+b.innerHTML=`<div class="bar" role="progressbar" aria-label="Quiz progress"><i style="width:${qi/Q.length*100}%"></i></div><p class="mut">Question ${qi+1} of ${Q.length} · Score ${sc}</p><h3>${q[0]}</h3><div class="opts">${cur.map((o,i)=>`<button class="btn" data-o="${i}">${o[0]}</button>`).join('')}</div><div id="qf" aria-live="polite"></div>`}
+$('#qbox').onclick=e=>{const o=e.target.closest('[data-o]');if(o&&!ans){ans=true;const k=+o.dataset.o,ok=cur[k][1];sc+=ok;document.querySelectorAll('[data-o]').forEach((x,i)=>{x.classList.add(cur[i][1]?'ok':i==k?'no':'x');x.disabled=true});
+$('#qf').innerHTML=`<p class="fb ${ok?'g':'r'}"><b>${ok?'Correct!':'Not quite.'}</b> ${Q[qi][2]}</p><button class="btn p" id="qn">${qi==Q.length-1?'See results':'Next question'}</button>`;$('#qn').onclick=()=>{qi++;qz()}}};qz();
+$('#e1').onclick=()=>{stop();li=0;lab()};$('#e2').onclick=()=>$('#missionreset').click();$('#e3').onclick=()=>{qi=sc=0;qz()};
+</script></body></html>
